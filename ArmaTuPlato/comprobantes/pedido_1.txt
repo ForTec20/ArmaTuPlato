@@ -1,0 +1,14 @@
+ARMATUPLATO - COMPROBANTE DE PEDIDO
+------------------------------------------------------------
+Pedido #1
+Cliente: Juan
+Fecha:   20/11/2026 19:23
+------------------------------------------------------------
+2 x Pizza Grande en masa gruesa | Salsa Picante, queso Cheddar, Chorizo, con cebolla + Tocineta + Papas
+     $47.300 c/u = $94.600
+------------------------------------------------------------
+Subtotal:
+  $94.600
+Impoconsumo (8%):
+  $7.568
+TOTAL A PAGAR: $102.168

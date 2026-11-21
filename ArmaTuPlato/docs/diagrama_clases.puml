@@ -1,0 +1,105 @@
+@startuml ArmaTuPlato
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+title ArmaTuPlato - Diagrama de clases (Builder + Decorator)
+
+package "Patrón BUILDER" #E8F1FB {
+  class ProductoDirector <<Director>> {
+    +pizzaClasica(b: ProductoBuilder, t: Tamano): Producto
+    +hamburguesaClasica(b: ProductoBuilder, t: Tamano): Producto
+  }
+  interface ProductoBuilder <<Builder>> {
+    +tamano(t: Tamano): ProductoBuilder
+    +base(nombre: String): ProductoBuilder
+    +salsa(nombre: String): ProductoBuilder
+    +queso(nombre: String): ProductoBuilder
+    +proteina(nombre: String): ProductoBuilder
+    +agregarVegetal(nombre: String): ProductoBuilder
+    +reset(): ProductoBuilder
+    +construir(): Producto
+  }
+  abstract class BaseProductoBuilder <<Builder>> {
+    -catalogo: Catalogo
+    -tamano: Tamano
+    -base, salsa, queso, proteina: String
+    -vegetales: List<String>
+    #validar()
+  }
+  class PizzaBuilder <<ConcreteBuilder>> {
+    +construir(): Producto
+  }
+  class HamburguesaBuilder <<ConcreteBuilder>> {
+    +construir(): Producto
+  }
+}
+
+package "Patrón DECORATOR" #FDF0E1 {
+  interface IProducto <<Component>> {
+    +getNombre(): String
+    +getDescripcion(): String
+    +getPrecio(): double
+    +getExtras(): List<String>
+  }
+  abstract class ProductoDecorator <<Decorator>> {
+    -producto: IProducto
+    -precioExtra: double
+    +getNombreExtra(): String {abstract}
+    +getDescripcion(): String
+    +getPrecio(): double
+  }
+  class QuesoExtraDecorator <<ConcreteDecorator>>
+  class TocinetaDecorator <<ConcreteDecorator>>
+  class SalsaEspecialDecorator <<ConcreteDecorator>>
+  class PapasDecorator <<ConcreteDecorator>>
+  class BebidaDecorator <<ConcreteDecorator>>
+}
+
+package "Producto (compartido)" #F1EBF8 {
+  abstract class Producto <<ConcreteComponent / Product>> {
+    -tamano: Tamano
+    -tipo, base, salsa, queso, proteina: Ingrediente
+    -vegetales: List<Ingrediente>
+    +getPrecio(): double
+    #detalleIngredientes(): String
+    +getNombre(): String {abstract}
+    +getDescripcion(): String {abstract}
+  }
+  class Pizza <<ConcreteProduct>>
+  class Hamburguesa <<ConcreteProduct>>
+}
+
+package "Apoyo" #F3F3F3 {
+  class Catalogo
+  class Ingrediente
+  class GestorPedidos
+  class Pedido
+  class ItemPedido
+  class Facturacion <<utilidad>>
+  class ArmaTuPlatoException
+}
+
+ProductoDirector ..> ProductoBuilder : usa
+BaseProductoBuilder ..|> ProductoBuilder
+PizzaBuilder --|> BaseProductoBuilder
+HamburguesaBuilder --|> BaseProductoBuilder
+PizzaBuilder ..> Pizza : <<crea>>
+HamburguesaBuilder ..> Hamburguesa : <<crea>>
+
+Pizza --|> Producto
+Hamburguesa --|> Producto
+Producto ..|> IProducto
+ProductoDecorator ..|> IProducto
+ProductoDecorator o--> "1" IProducto : -producto
+QuesoExtraDecorator --|> ProductoDecorator
+TocinetaDecorator --|> ProductoDecorator
+SalsaEspecialDecorator --|> ProductoDecorator
+PapasDecorator --|> ProductoDecorator
+BebidaDecorator --|> ProductoDecorator
+
+Catalogo *-- "1..*" Ingrediente
+BaseProductoBuilder ..> Catalogo
+Producto o-- Ingrediente
+GestorPedidos o-- "*" Pedido
+Pedido *-- "1..*" ItemPedido
+ItemPedido --> IProducto
+@enduml
