@@ -81,15 +81,3 @@ Prueba de lógica sin interfaz (después de compilar):
 java -cp out test/PruebaLogica.java
 ```
 
-## Subir a GitHub
-
-1. Crear un repositorio vacío en GitHub (sin README).
-2. En la carpeta del proyecto:
-```
-git init
-git add .
-git commit -m "ArmaTuPlato: proyecto final con Builder y Decorator"
-git branch -M main
-git remote add origin https://github.com/TU_USUARIO/ArmaTuPlato.git
-git push -u origin main
-```
