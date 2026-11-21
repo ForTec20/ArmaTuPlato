@@ -80,4 +80,7 @@ Prueba de lógica sin interfaz (después de compilar):
 ```
 java -cp out test/PruebaLogica.java
 ```
+# Repositorio de GITHUB
+
+https://github.com/ForTec20/ArmaTuPlato/tree/main
 
